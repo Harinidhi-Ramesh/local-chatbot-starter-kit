@@ -22,10 +22,26 @@ public class ChatServer {
 
         server.createContext("/chat", (HttpExchange exchange) -> {
             try {
+                //Allow any origin to call this server
+                exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
+                exchange.getResponseHeaders().set("Access-Control-Allow-Methods", "POST, OPTIONS");
+                exchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Content-Type");
+
+                // The browser sends this BEFORE the real POST, just to check permissions
+                if (exchange.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
+                    exchange.sendResponseHeaders(204, -1);
+                    return;
+                }
+
+
                 //Read the user's message
                 InputStream is = exchange.getRequestBody();
                 ByteArrayOutputStream buffer = new ByteArrayOutputStream();
                 is.transferTo(buffer);
+                String rawBody = buffer.toString();
+
+                //Parse the incoming JSON and extract just the "message" field
+                JsonNode requestNode = mapper.readTree(rawBody);
                 String userMessage = buffer.toString();
 
                 System.out.println("Received: " + userMessage);
