@@ -25,22 +25,6 @@ body {
 }
 
 /* Minimalist Clean Header */
-/*
-.chat-header {
-  background-color: #ffffff;
-  border-bottom: 1px solid #e2e8f0;
-  padding: 16px 24px;
-  text-align: center;
-}
-
-.chat-header h2 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #1e293b;
-  letter-spacing: 0.3px;
- 
-}
-*/
 .chat-header {
   background-color: #4f46e5; /* Deep indigo accent */
   color: #ffffff;
