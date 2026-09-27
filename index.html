@@ -17,12 +17,22 @@
       <div class="message ai">Hello :) I am your local AI. How can I help you today?</div>
     </div>
 
+    <button
+      id="scroll-to-bottom"
+      class="scroll-to-bottom"
+      type="button"
+      aria-label="Scroll to latest message"
+      hidden
+    >
+      ↓
+    </button>
+
     <div class="input-container">
-      <input 
-        type="text" 
-        id="user-input" 
-        placeholder="Ask local AI Assistant..." 
-        autocomplete="off" 
+      <input
+        type="text"
+        id="user-input"
+        placeholder="Ask local AI Assistant..."
+        autocomplete="off"
       />
       <button id="send-btn">Send</button>
     </div>

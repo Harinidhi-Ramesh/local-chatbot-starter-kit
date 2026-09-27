@@ -17,6 +17,7 @@ body {
 
 /* Fullscreen Canvas */
 .chat-container {
+  position: relative;
   width: 100vw;
   height: 100vh;
   background: #ffffff;
@@ -83,6 +84,37 @@ body {
   border: 1px solid #fecaca;
 }
 
+.scroll-to-bottom {
+  position: absolute;
+  right: 24px;
+  bottom: 88px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #cbd5e1;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #4f46e5;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 1;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.scroll-to-bottom:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.2);
+}
+
+.scroll-to-bottom:focus-visible {
+  outline: 3px solid rgba(79, 70, 229, 0.25);
+  outline-offset: 2px;
+}
+
+.scroll-to-bottom[hidden] {
+  display: none;
+}
+
 /* Input Bar Container */
 .input-container {
   padding: 20px 15%;
@@ -141,7 +173,7 @@ body {
     padding-left: 16px;
     padding-right: 16px;
   }
-  
+
   .message {
     max-width: 88%; /* Give messages slightly more room on mobile */
   }

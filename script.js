@@ -1,8 +1,20 @@
 const chatWindow = document.getElementById('chat-window');
 const userInput = document.getElementById('user-input');
 const sendBtn = document.getElementById('send-btn');
+const scrollToBottomBtn = document.getElementById('scroll-to-bottom');
+
+const BOTTOM_THRESHOLD = 24;
 
 sendBtn.addEventListener('click', sendMessage);
+chatWindow.addEventListener('scroll', updateScrollButton);
+scrollToBottomBtn.addEventListener('click', () => {
+  chatWindow.scrollTo({
+    top: chatWindow.scrollHeight,
+    behavior: 'smooth',
+  });
+});
+
+updateScrollButton();
 userInput.addEventListener('keypress', (event) => {
   if (event.key === 'Enter') {
     sendMessage();
@@ -35,7 +47,7 @@ async function sendMessage() {
     }
 
     const data = await response.json();
-    
+
     // 4. Render AI Reply
     appendMessage(data.reply || 'No response received.', 'ai');
 
@@ -53,11 +65,19 @@ function appendMessage(text, senderClass) {
   const messageElement = document.createElement('div');
   messageElement.classList.add('message', senderClass);
   messageElement.textContent = text;
-  
+
   chatWindow.appendChild(messageElement);
-  
-  // Auto-scroll to the bottom
+
+  // New messages should return the conversation to the latest reply.
   chatWindow.scrollTop = chatWindow.scrollHeight;
+  updateScrollButton();
+}
+
+function updateScrollButton() {
+  const distanceFromBottom =
+    chatWindow.scrollHeight - chatWindow.scrollTop - chatWindow.clientHeight;
+
+  scrollToBottomBtn.hidden = distanceFromBottom <= BOTTOM_THRESHOLD;
 }
 
 function toggleInputState(isDisabled) {
