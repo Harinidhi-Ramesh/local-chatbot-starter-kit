@@ -3,11 +3,14 @@ const userInput = document.getElementById('user-input');
 const sendBtn = document.getElementById('send-btn');
 
 sendBtn.addEventListener('click', sendMessage);
-userInput.addEventListener('keypress', (event) => {
-  if (event.key === 'Enter') {
+userInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' && !event.shiftKey) {
+    event.preventDefault();
     sendMessage();
   }
 });
+
+userInput.addEventListener('input', resizeInput);
 
 async function sendMessage() {
   const text = userInput.value.trim();
@@ -16,6 +19,7 @@ async function sendMessage() {
   // 1. Render User Message & clear input
   appendMessage(text, 'user');
   userInput.value = '';
+  resizeInput();
 
   // 2. Disable controls while waiting for backend
   toggleInputState(true);
@@ -63,4 +67,9 @@ function appendMessage(text, senderClass) {
 function toggleInputState(isDisabled) {
   userInput.disabled = isDisabled;
   sendBtn.disabled = isDisabled;
+}
+
+function resizeInput() {
+  userInput.style.height = 'auto';
+  userInput.style.height = `${Math.min(userInput.scrollHeight, 160)}px`;
 }
